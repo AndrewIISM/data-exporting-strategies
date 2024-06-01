@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: "polling-db-status"
+  datasource:
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    url: "jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_DATABASE}?currentSchema=${DB_SCHEMA}"
+  liquibase:
+    change-log: classpath:db/changelog/root-changelog.xml
+
+event:
+  dispatcher:
+    stalled-seconds-rate: 900 # 15 minutes
+    export-seconds-rate: 1
+    retry-stalled:
+      passed-minutes-in-processing-to-retry: 15
