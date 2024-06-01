@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: "polling-kafka-transactional"
+  datasource:
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    url: "jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_DATABASE}?currentSchema=${DB_SCHEMA}"
+  liquibase:
+    change-log: classpath:db/changelog/root-changelog.xml
+
+event:
+  batch-size: 1000
+  offset:
+    topic-name: event.offset
+    group-id: event-offset
