@@ -15,7 +15,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Slf4j
 @RequiredArgsConstructor
-public class DispatcherScheduler {
+public class EventDispatcherScheduler {
 
     private final EventTypeService exportTaskTypeService;
     private final EventService exportTaskService;

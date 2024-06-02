@@ -1,6 +1,6 @@
 package com.exporting.db.polling.status.configuration;
 
-import com.exporting.db.polling.status.DispatcherScheduler;
+import com.exporting.db.polling.status.EventDispatcherScheduler;
 import com.exporting.db.polling.status.EventProcessingService;
 import com.exporting.db.polling.status.configuration.property.EventRetryStalledProperty;
 import com.exporting.db.polling.status.db.event.EventService;
@@ -22,14 +22,14 @@ import java.util.stream.Collectors;
 public class DispatcherScheduleConfiguration {
 
     @Bean
-    public DispatcherScheduler dispatcherScheduler(List<EventProcessingService> exportableTaskServices,
-                                                   EventTypeService exportTaskInfoService,
-                                                   EventService exportTaskService) {
+    public EventDispatcherScheduler dispatcherScheduler(List<EventProcessingService> exportableTaskServices,
+                                                        EventTypeService exportTaskInfoService,
+                                                        EventService exportTaskService) {
 
         Map<EventType, EventProcessingService> exportTasks = exportableTaskServices.stream()
                 .collect(Collectors.toMap(EventProcessingService::getType, Function.identity()));
 
-        return new DispatcherScheduler(exportTaskInfoService, exportTaskService, exportTasks);
+        return new EventDispatcherScheduler(exportTaskInfoService, exportTaskService, exportTasks);
     }
 
 }

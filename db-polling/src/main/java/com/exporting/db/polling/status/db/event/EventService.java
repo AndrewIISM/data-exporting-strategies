@@ -1,11 +1,15 @@
 package com.exporting.db.polling.status.db.event;
 
 import com.exporting.db.polling.status.configuration.property.EventRetryStalledProperty;
+import com.exporting.db.polling.status.enumeration.EventStatus;
+import com.exporting.db.polling.status.enumeration.EventType;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -15,6 +19,19 @@ public class EventService {
     private final EventRepository eventRepository;
 
     private final EventRetryStalledProperty retryStalledProperty;
+
+    @Nullable
+    public Long insert(EventType eventType, String jsonPayload) {
+        return eventRepository.insert(eventType, jsonPayload);
+    }
+
+    public void updateStatusByIds(EventStatus status, Set<Long> ids) {
+        eventRepository.updateStatus(status, ids);
+    }
+
+    public <T> List<Event<T>> findBatchTypeAndStatusNew(EventType type, int batchSize) {
+        return eventRepository.findBatchTypeAndStatusNew(type, batchSize);
+    }
 
     public void updateStalledToAnotherRetry() {
         List<Long> retriedTaskIds =
