@@ -13,16 +13,16 @@ create table event (
     primary key (id)
 ) partition by range (id);
 
-select ${DB_PARTMAN_SCHEMA}.create_parent(
-    p_parent_table := '${DB_SCHEMA}.event',
+select partman.create_parent(
+    p_parent_table := 'public.event',
     p_control := 'id',
     p_type := 'native',
-    p_interval := '1000000',
+    p_interval := '5000',
     p_premake := 1
 );
 
 ----
 
-update ${DB_PARTMAN_SCHEMA}.part_config
+update partman.part_config
    set infinite_time_partitions=true
  where parent_table in ('event');

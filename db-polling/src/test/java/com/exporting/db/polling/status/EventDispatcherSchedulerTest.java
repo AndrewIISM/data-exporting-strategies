@@ -3,7 +3,6 @@ package com.exporting.db.polling.status;
 import com.exporting.db.polling.status.configuration.EventTestConfiguration;
 import com.exporting.db.polling.status.db.event.EventService;
 import com.exporting.db.polling.status.enumeration.EventStatus;
-import com.exporting.db.polling.status.enumeration.EventType;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

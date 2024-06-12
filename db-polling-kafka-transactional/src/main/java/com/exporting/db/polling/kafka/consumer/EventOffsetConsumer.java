@@ -15,13 +15,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EventOffsetConsumer {
 
-    private final Consumer<String, String> eventOffsetConsumer;
+    private final Consumer<String, String> eventOffsetKafkaConsumer;
     private final TopicPartition eventOffsetTopicPartition;
 
     public Optional<Long> consumerLastOffset() {
-        eventOffsetConsumer.seekToEnd(List.of(eventOffsetTopicPartition));
+        eventOffsetKafkaConsumer.seekToEnd(List.of(eventOffsetTopicPartition));
 
-        return getLastOffset(eventOffsetConsumer.position(eventOffsetTopicPartition));
+        return getLastOffset(eventOffsetKafkaConsumer.position(eventOffsetTopicPartition));
     }
 
     private Optional<Long> getLastOffset(long currentPosition) {
@@ -30,8 +30,8 @@ public class EventOffsetConsumer {
             return Optional.empty();
         }
 
-        eventOffsetConsumer.seek(eventOffsetTopicPartition, lastRecordIndex);
-        ConsumerRecords<String, String> records = eventOffsetConsumer.poll(Duration.ofMinutes(1));
+        eventOffsetKafkaConsumer.seek(eventOffsetTopicPartition, lastRecordIndex);
+        ConsumerRecords<String, String> records = eventOffsetKafkaConsumer.poll(Duration.ofMinutes(1));
 
         if (records.count() > 1) {
             throw new RuntimeException("More than one records were fount in the offset topic: " + records.count());

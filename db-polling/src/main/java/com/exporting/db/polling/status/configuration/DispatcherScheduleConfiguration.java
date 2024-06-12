@@ -22,14 +22,14 @@ import java.util.stream.Collectors;
 public class DispatcherScheduleConfiguration {
 
     @Bean
-    public EventDispatcherScheduler dispatcherScheduler(List<EventProcessingService> exportableTaskServices,
-                                                        EventTypeService exportTaskInfoService,
-                                                        EventService exportTaskService) {
+    public EventDispatcherScheduler dispatcherScheduler(List<EventProcessingService> eventProcessingServices,
+                                                        EventTypeService eventTypeService,
+                                                        EventService eventService) {
 
-        Map<EventType, EventProcessingService> exportTasks = exportableTaskServices.stream()
+        Map<EventType, EventProcessingService> exportTasks = eventProcessingServices.stream()
                 .collect(Collectors.toMap(EventProcessingService::getType, Function.identity()));
 
-        return new EventDispatcherScheduler(exportTaskInfoService, exportTaskService, exportTasks);
+        return new EventDispatcherScheduler(eventTypeService, eventService, exportTasks);
     }
 
 }
