@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.exporting'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.3.0'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc:3.3.0'
+    implementation 'org.springframework.kafka:spring-kafka:3.2.0'
+    implementation 'org.postgresql:postgresql:42.7.3'
+    implementation 'org.liquibase:liquibase-core:4.28.0'
+
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+    testImplementation 'org.testcontainers:junit-jupiter:1.19.8'
+    testImplementation 'org.testcontainers:postgresql:1.19.8'
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers:3.3.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.3.0'
+    testImplementation 'org.awaitility:awaitility:4.2.1'
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+processTestResources {
+    from("$rootDir/config/initdb") {
+        into("initdb")
+    }
+    dependsOn("compileTestJava")
+}

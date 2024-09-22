@@ -1,19 +1,20 @@
-package com.exporting.db.polling.status;
+package com.exporting.db.listen;
 
-import com.exporting.db.polling.status.db.event.EventService;
-import com.exporting.db.polling.status.db.event_type.EventTypeService;
-import com.exporting.db.polling.status.enumeration.EventType;
+import com.exporting.db.listen.db.event.EventService;
+import com.exporting.db.listen.db.event_type.EventTypeService;
+import com.exporting.db.listen.enumeration.EventType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.util.List;
 import java.util.Map;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Slf4j
 @RequiredArgsConstructor
-public class EventDispatcherScheduler {
+public class EventDispatcher {
 
     private final EventTypeService eventTypeService;
     private final EventService eventService;
@@ -28,8 +29,11 @@ public class EventDispatcherScheduler {
 
     @Scheduled(fixedRateString = "${event.dispatcher.export-seconds-rate}", timeUnit = SECONDS)
     public void exportBySchedule() {
-        eventTypeService.findEventsTypeInfo()
-                .forEach(this::processTask);
+        export(eventTypeService.findEventsInfo());
+    }
+
+    public void export(List<EventType> types) {
+        types.forEach(this::processTask);
     }
 
     private void processTask(EventType eventType) {

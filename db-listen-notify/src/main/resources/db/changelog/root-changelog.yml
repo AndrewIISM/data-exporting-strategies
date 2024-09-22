@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - preConditions:
+      - onFail: HALT
+      - dbms:
+          type: postgresql
+
+  - include:
+      file: db/changelog/ddl/event.sql
+  - include:
+      file: db/changelog/dml/event_type.sql

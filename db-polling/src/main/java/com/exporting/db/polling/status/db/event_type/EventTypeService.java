@@ -1,5 +1,6 @@
 package com.exporting.db.polling.status.db.event_type;
 
+import com.exporting.db.polling.status.enumeration.EventType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +12,8 @@ public class EventTypeService {
 
     private final EventTypeRepository repository;
 
-    public List<EventTypeToProcess> findExportTasksInfo() {
-        return repository.findExportTasksType();
+    public List<EventType> findEventsTypeInfo() {
+        return repository.findEventTypes();
     }
 
 }

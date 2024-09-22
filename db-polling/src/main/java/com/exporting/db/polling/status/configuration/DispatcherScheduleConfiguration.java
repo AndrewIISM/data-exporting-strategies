@@ -26,10 +26,10 @@ public class DispatcherScheduleConfiguration {
                                                         EventTypeService eventTypeService,
                                                         EventService eventService) {
 
-        Map<EventType, EventProcessingService> exportTasks = eventProcessingServices.stream()
+        Map<EventType, EventProcessingService> events = eventProcessingServices.stream()
                 .collect(Collectors.toMap(EventProcessingService::getType, Function.identity()));
 
-        return new EventDispatcherScheduler(eventTypeService, eventService, exportTasks);
+        return new EventDispatcherScheduler(eventTypeService, eventService, events);
     }
 
 }

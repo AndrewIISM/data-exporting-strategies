@@ -19,24 +19,21 @@ public class EventTypeRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
-    public List<EventTypeToProcess> findExportTasksType() {
+    public List<EventType> findEventTypes() {
         return jdbcTemplate.query("""
-                select e.type_code,
-                       count(e.id) count_to_process
+                select e.type_code
                   from event e
                  where e.status = 'NEW'
                  group by e.type_code
+                having count(e.id) > 0
                 """, Map.of(), eventTypeToProcessRowMapper);
     }
 
-    static class EventTypeToProcessRowMapper implements RowMapper<EventTypeToProcess> {
+    static class EventTypeToProcessRowMapper implements RowMapper<EventType> {
 
         @Override
-        public EventTypeToProcess mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return new EventTypeToProcess(
-                    EventType.valueOf(rs.getString("type_code")),
-                    rs.getInt("count_to_process")
-            );
+        public EventType mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return EventType.valueOf(rs.getString("type_code"));
         }
 
     }

@@ -1,7 +1,7 @@
-package com.exporting.db.polling.status.db.event;
+package com.exporting.db.listen.db.event;
 
-import com.exporting.db.polling.status.enumeration.EventStatus;
-import com.exporting.db.polling.status.enumeration.EventType;
+import com.exporting.db.listen.enumeration.EventStatus;
+import com.exporting.db.listen.enumeration.EventType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
@@ -99,7 +99,6 @@ public class EventRepository {
                        processing_retries_count = processing_retries_count + 1
                   from stalled se
                  where ue.id = se.id
-                   and ue.status != 'NEW'
                 returning ue.id
                 """,
                 Map.of("passedMinutesInProcessingToRetry", passedMinutesInProcessingToRetry),
@@ -122,7 +121,6 @@ public class EventRepository {
                        updated_at = clock_timestamp()
                   from stalled se
                  where ue.id = se.id
-                   and ue.status != 'NEW'
                 returning ue.id
                 """,
                 Map.of("passedMinutesInProcessingToRetry", passedMinutesInProcessingToRetry),

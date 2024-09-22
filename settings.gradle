@@ -8,4 +8,5 @@
 rootProject.name = 'data-exporting-strategies'
 include 'db-polling-kafka-transactional'
 include 'db-polling'
+include 'db-listen-notify'
 
