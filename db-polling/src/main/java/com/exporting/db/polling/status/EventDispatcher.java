@@ -13,7 +13,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 @Slf4j
 @RequiredArgsConstructor
-public class EventDispatcherScheduler {
+public class EventDispatcher {
 
     private final EventTypeService eventTypeService;
     private final EventService eventService;
